@@ -1,0 +1,11 @@
+# Ignore sensitive local config
+settings.toml
+
+# Ignore macOS metadata
+.DS_Store
+.Trashes
+._*
+.fseventsd
+
+# Ignore CircuitPython auto-generated files
+boot_out.txt

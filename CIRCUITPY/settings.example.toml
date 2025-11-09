@@ -1,0 +1,11 @@
+# Example configuration file for Matrix Portal M4 Home Energy Overview
+# Copy this file to settings.toml and fill in your own credentials.
+
+WIFI_SSID = "YourNetworkName"
+WIFI_PASSWORD = "YourWifiPassword"
+
+# Local API endpoint for Solar Manager
+SOLAR_MANAGER_LOCAL_API_BASE_URL = "http://192.168.1.10/v2/point"
+
+# Optional device ID for water temperature sensor
+SOLAR_MANAGER_DEVICE_TEMP_ID = "68fb...."
