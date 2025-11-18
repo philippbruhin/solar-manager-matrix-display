@@ -147,8 +147,8 @@ class HomeEnergyUI:
         # The battery icon sticks to the left margin; the "%"-label sits to its right.
         self.icon_batt.x = C.LEFT_MARGIN
 
-        # Choose icon and color based on SoC. Below 6% → red text and empty icon.
-        if batt_soc < 6:
+        # Choose icon and color based on SoC. Below 10% → red text and empty icon.
+        if batt_soc < 10:
             # Critical battery level
             self.icon_batt.bitmap = displayio.OnDiskBitmap(C.ICON_BATT_EMPTY)
             self.lbl_soc.color = C.COL_RED

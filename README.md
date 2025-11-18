@@ -1,9 +1,8 @@
-# 🌞 Matrix Display for Solar Manager (Adafruit Matrix Portal M4)
+# 🌞 Matrix Display for Solar Manager
 
-## 💡 Project idea
+This repository contains the CircuitPython firmware for driving a 64×32 RGB LED matrix (HUB75) using an Adafruit Matrix Portal M4. The display shows live energy data from the Solar Manager gateway via its local API.
 
-After installing solar panels at home, I wanted to **see my energy flow in real time** —  
-how much power is produced, how much is used, and where it goes (e.g., EV, heat pump, boiler).
+This readme is meant only for the code and how to run it on the micro controller. Information about Solar Manager itself and this project in general, is documented separately on the GH Pages site in German.
 
 This small display gives a quick visual overview of:
 - 🏠 **House consumption**
@@ -11,38 +10,13 @@ This small display gives a quick visual overview of:
 - 🔋 **Battery state of charge**
 - 🚿 **Hot water temperature**
 
-It helps build intuition for how much energy different devices use  
-and shows how small changes (like lowering the floor heating by 1 °C) affect power draw.
+![Screen Segmentation](./docs/assets/img/matrix-display-screen-segmentation.jpg)
 
-This project connects to a **Solar Manager** gateway via its **local API**  
-and displays live energy data on an **Adafruit Matrix Portal M4** with a 64×32 RGB LED matrix.
+It helps build intuition for how much energy different devices use  and shows how small changes (like lowering the floor heating by 1 °C) affect power draw.
 
----
+This project connects to a **Solar Manager** gateway via its **local API** and displays live energy data on an **Adafruit Matrix Portal M4** with a 64×32 RGB LED matrix. So make sure you enalbe the local API on [web.solar-manager.ch/my-devices/](https://web.solar-manager.ch/my-devices/).
 
-## ⚡ What the Solar Manager does
-
-The [**Solar Manager**](https://www.solarmanager.ch/) is a smart energy controller that optimizes your self-consumption.
-
-It measures your **solar production**, **household consumption**, and **battery level**,  
-and automatically distributes power to where it’s most useful.
-
-For example:
-- When a lot of sunlight is available, it can **heat water** or **charge your EV**.
-- When clouds reduce production, it **pauses less important loads**.
-- At night, it can **draw from your home battery** instead of the grid.
-
-This increases your **self-consumption** — meaning you use more of your own solar energy  
-instead of feeding it into the grid at a low rate.  
-The more solar energy you use directly, the higher your **autonomy** and **efficiency**.
-
-Unlike nuclear or fossil power, solar energy is **weather-dependent**.  
-Production varies daily, so adapting your consumption (for example, running the dishwasher  
-or heating water when the sun is shining) helps balance supply and demand.
-
-By using more of your own clean energy, you reduce stress on the public grid,  
-save costs, and make your home more sustainable.
-
----
+![Enable Local API](./docs/assets/img/solar-manager-local-api.png)
 
 ## 🧱 Hardware used
 
@@ -50,16 +24,13 @@ save costs, and make your home more sustainable.
 |------------|--------------|------|
 | [Adafruit Matrix Portal M4](https://www.adafruit.com/product/4812) | Main controller board with SAMD51 + ESP32 for Wi-Fi | [Digi-Key CH](https://www.digikey.ch/en/products/detail/adafruit-industries-llc/4812/15189153) |
 | 64×32 RGB LED Matrix (HUB75) | Display panel | Included in the starter kit |
-| USB-C cable and power supply | For power & programming | Included, but with **US plug** – not usable in Switzerland 🇨🇭 |
+| USB-C cable and power supply | For power & programming | Included, but with **US plug** – not usable in Switzerland |
 
 💡 The Matrix Portal M4 includes:
 - a **SAMD51 microcontroller** (runs CircuitPython and drives the LED matrix)
 - an **ESP32 co-processor** (handles Wi-Fi via SPI)
 
-> ⚠️ The kit’s USB power supply includes a **US plug**.  
-> You can use any 5 V / 2 A (or higher) USB-C power adapter instead.
-
----
+> The kit’s USB power supply includes a **US plug**. You can use any 5 V / 2 A (or higher) USB-C power adapter instead.
 
 ## 🧰 Firmware & library setup
 
@@ -75,8 +46,6 @@ save costs, and make your home more sustainable.
 You can also update the ESP32 Wi-Fi firmware if needed:  
 🔗 [Adafruit: Upgrade ESP32 AirLift firmware](https://learn.adafruit.com/upgrading-esp32-firmware/upgrade-all-in-one-esp32-airlift-firmware)
 
----
-
 ### 2. CircuitPython libraries
 
 This project uses the **Adafruit CircuitPython Bundle v10.x**,  
@@ -86,22 +55,47 @@ You **do not need to install anything manually** if you use this version.
 
 However:
 
-> ⚠️ If you later install a newer CircuitPython firmware (e.g., v11 or higher),  
-> you must also update the libraries to match that version.
+> ⚠️ If you later install a newer CircuitPython firmware (e.g., v11 or higher), you must also update the libraries to match that version.
 
 You can always download the latest bundle here:  
 👉 [https://circuitpython.org/libraries](https://circuitpython.org/libraries)
 
 Simply unzip the bundle and copy the updated libraries you need into the `/lib` folder on `CIRCUITPY`.
 
----
+## 📁 Project file overview
 
-## 🧮 Folder structure
+```
+CIRCUITPY/
+│
+├── code.py
+├── config.py
+├── ui.py
+├── helpers.py
+│
+├── assets/
+│   ├── icon-battery-empty.bmp
+│   ├── icon-battery-full.bmp
+│   ├── icon-house.bmp
+│   ├── icon-shower.bmp
+│   ├── icon-sun.bmp
+│
+├── settings.toml   ← created by you, not in repo
+├── settings.example.toml
+│
+└── lib/            ← CircuitPython libraries
 
-TODO
+```
 
-
----
+| File / Folder             | Purpose                      | Notes                                                         |
+| ------------------------- | ---------------------------- | ------------------------------------------------------------- |
+| **code.py**               | Main application entry point | Starts Wi-Fi, fetches Solar Manager data, updates the display |
+| **config.py**             | Configuration values         | Colors, layout positions, refresh intervals, display settings |
+| **ui.py**                 | User interface rendering     | Loads icons, draws text, builds the display group             |
+| **helpers.py**            | Utility functions            | Value formatting, number helpers, safe parsing                |
+| **assets/**               | Bitmap icons used in UI      | `.bmp` files for solar, house, battery, boiler, etc.          |
+| **settings.toml**         | Your private configuration   | Wi-Fi credentials + Solar Manager API URL (**not in repo**)   |
+| **settings.example.toml** | Template for settings        | Copy to `settings.toml` and fill your values                  |
+| **lib/**                  | CircuitPython libraries      | Needed by the Matrix Portal (bundled in repo)                 |
 
 ## ⚙️ Configuration
 
