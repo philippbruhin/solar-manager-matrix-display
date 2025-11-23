@@ -27,7 +27,7 @@ jobs:
         run: sudo apt-get install --fix-missing libvips
 
       - name: Install Jekyll and plugins
-        run: gem install "jekyll:~>4.3" jekyll-remote-theme jekyll-seo-tag jekyll-og-image
+        run: gem install "jekyll:~>4.3.3" "jekyll-sass-converter:3.0.0" jekyll-remote-theme jekyll-seo-tag jekyll-og-image
 
       - name: Setup Pages
         id: pages
