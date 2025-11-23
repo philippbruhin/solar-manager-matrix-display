@@ -2,7 +2,7 @@
 title: Adafruit LED Display für Solar Manager
 ---
 
-# LED Matrix Display für Solar Manager
+Hier der Intro Text.
 
 <div class="iframe-container">
   <iframe 
@@ -12,4 +12,4 @@ title: Adafruit LED Display für Solar Manager
   </iframe>
 </div>
 
-Text
+Noch mehr text.
