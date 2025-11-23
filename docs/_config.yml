@@ -1,10 +1,9 @@
 title: Eigenbau Display für Solar Manager
 description: Firmware für ein Adafruit LED Display, welches Solar Manager Werte anzeigt.
 
-remote_theme: pages-themes/primer@v0.6.0
+theme: jekyll-theme-primer
 
 plugins:
-  - jekyll-remote-theme
   - jekyll-seo-tag
 
 kramdown:
