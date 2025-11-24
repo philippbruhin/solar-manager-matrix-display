@@ -108,7 +108,7 @@ Das Modell kann im folgenden eingebetteten Viewer betrachtet werden. Es kann sel
 
 <div class="iframe-container">
   <iframe 
-    src="https://philippbruhin.autodesk360.com/shares/public/SH90d2dQT28d5b602811b9992e377d0221f6?mode=embed"
+    src="https://philippbruhin.autodesk360.com/shares/public/SH90d2dQT28d5b60281194915078e9b8702a?mode=embed"
     allowfullscreen
     frameborder="0">
   </iframe>
