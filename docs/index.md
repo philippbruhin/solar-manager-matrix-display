@@ -2,7 +2,7 @@
 title: Adafruit LED Display für Solar Manager
 ---
 
-Diese Seite beschreibt den Bau eines kostengünstigen, lokal betriebenen und langlebigen Displays mit 2'048 LEDs für den [Solar Manager](https://www.solarmanager.ch/).
+Diese Seite beschreibt den Eigenbau eines kostengünstigen, lokal betriebenen und langlebigen Displays mit 2'048 LEDs für den [Solar Manager](https://www.solarmanager.ch/).
 
 ![Solar Manager Display](./assets/img/matrix-display-screen-segmentation.jpg)
 
@@ -56,8 +56,8 @@ Für das Projekt wurden folgende Ziele definiert:
 Für das Projekt kommt ein LED-Matrix-Set von Adafruit zum Einsatz. Es besteht aus einem **64×32-Pixel RGB-LED-Panel** (2'048 LEDs) und einem dazugehörigen **RGB Matrix Bonnet** (Aufsteckplatine). Das Panel ist ein sogenanntes **1/16-Scan- oder „1/16 Duty“-Display**, häufig als „HUB75-Display“ bezeichnet. Solche Panels werden typischerweise für Anzeigetafeln oder Informationsdisplays verwendet: Sie sind sehr hell, robust, modular aufgebaut und bieten hervorragende Darstellung bei geringem Stromverbrauch.
 
 * Adafruit RGB Matrix Bonnet + 64×32-Pixel LED-Panel  
-  Link zur Hersteller-Webseite: https://www.adafruit.com/product/4812
-* Gekauft habe ich das Set über DigiKey: https://www.digikey.ch/de/products/detail/adafruit-industries-llc/4812/15189153  
+  Link zur Hersteller-Webseite: [www.adafruit.com/product/4812](https://www.adafruit.com/product/4812)  
+* Gekauft habe ich das Set über DigiKey: [www.digikey.ch/de/products/detail/adafruit-industries-llc/4812/15189153](https://www.digikey.ch/de/products/detail/adafruit-industries-llc/4812/15189153)  
   Preis inkl. Versand: CHF 60.
 
 Das Set enthält **alles, was man für den Betrieb benötigt**: Das LED-Panel, das Matrix Bonnet (bzw. Matrix Portal M4), alle notwendigen Stecker sowie die Elektronik zur direkten Ansteuerung des Displays. Lediglich das mitgelieferte USB-C-Netzteil besitzt einen **US-Stecker** und muss daher durch ein CH-Modell ersetzt oder mit einem Adapter betrieben werden.
@@ -82,28 +82,29 @@ Das Set kann sowohl in **C** (Arduino-Umgebung) als auch in **Python** programmi
 
 CircuitPython ist einsteigerfreundlich, benötigt keine komplexen Toolchains und macht das Testen sehr einfach. Im Gegensatz zu C muss der Code nicht kompiliert werden. Man speichert die Python-Datei einfach auf dem Gerät und der Controller führt sie sofort und automatisch aus.
 
-Der vollständige Quellcode befindet sich im Repository des Projekts (Ordner `CIRCUITPY`): https://github.com/philippbruhin/solar-manager-matrix-display/
+Der vollständige Quellcode befindet sich im Repository des Projekts (Ordner `CIRCUITPY`): [github.com/philippbruhin/solar-manager-matrix-display/
+](https://github.com/philippbruhin/solar-manager-matrix-display/). Dort findet sich ebenfalls eine englische Anleitung, wie der Microcontroller für die Nutzung von [CircuitPython](https://circuitpython.org/) vorbereitet wird und wie man das Programm aufspielt.
 
-TODO: 5 Files beschreiben
+Das Programm ist bewusst schlank gehalten und besteht aus nur fünf Python-Dateien.
 
 # Funktionsweise des Displays
 
-Das Display zeigt vier Werte gleichzeitig an:
+Das Display wurde so programmiert, dass folgende vier Werte gleichzeitig angezeigt werden, wobei die 10x10-Pixel-Icons mit Hilfe von [www.pixilart.com/philippb/gallery](www.pixilart.com/philippb/gallery) erstellt wurden.
 
-* **Hausverbrauch**  
-* **Solarproduktion**  
-* **Batteriestatus**  
-* **Boiler-Temperatur**
+* 🏠 **Hausverbrauch**  
+* ☀️ **Solarproduktion**  
+* 🔋 **Batteriestatus**  
+* 🚿 **Boiler-Temperatur**
 
-Die Daten werden einmal pro Minute über die **lokale REST-API** des Solar Managers abgefragt.  
-Da die Abfrage vollständig lokal erfolgt, ist keine Authentifizierung notwendig und das Display ist nicht mit dem Internet verbunden.
+Die Daten werden einmal pro Minute über die **lokale REST-API** des Solar Managers abgefragt. Da die Abfrage vollständig lokal erfolgt, ist keine Authentifizierung an der API notwendig und das Display ist nicht mit dem Internet verbunden.
 
-Eine WebSocket-Lösung wäre möglich, wurde jedoch bewusst nicht gewählt, um eine ruhige, wenig wechselhafte Anzeige zu gewährleisten.
+Eine WebSocket-Lösung, bei der die Werte bei jeder Änderung sofort aktualisiert würden, wäre grundsätzlich möglich. Sie wurde jedoch bewusst nicht eingesetzt, um eine ruhige und wenig wechselhafte Darstellung sicherzustellen.
 
 # Gehäuse und Montage
 
-Für das Display wurde ein passender Halter benötigt. Dieser wurde von **ibex3d** konstruiert und gefertigt.  
-Das Modell kann im folgenden eingebetteten Viewer betrachtet werden und eignet sich für den 3D-Druck oder kann direkt bei ibex3d bestellt werden.
+Für das Display wurde ein passender Halter benötigt. Dieser wurde mit Hilfe des Autodesk-CAD-Programms [Fusion 360](https://www.autodesk.com/products/fusion-360/personal) gezeichnet. Die Software kann für den privaten Gebrauch kostenlos genutzt werden. Beim Konstruieren und bei der Fertigung erhielt ich Unterstützung von der [Ibex3D GmbH](https://ibex3d.ch/).
+
+Das Modell kann im folgenden eingebetteten Viewer betrachtet werden. Es kann selbst gedruckt oder direkt bei Ibex3D bestellt werden.
 
 <div class="iframe-container">
   <iframe 
@@ -115,7 +116,10 @@ Das Modell kann im folgenden eingebetteten Viewer betrachtet werden und eignet s
 
 # Fazit
 
-Dieses Projekt soll Anwendern eine einfache Vorlage für eine **lokale, unaufdringliche und jederzeit sichtbare Anzeige** ihres Solar Managers bieten.  
+Dieses Projekt bietet Anwendern eine einfache Vorlage für eine **lokale und jederzeit sichtbare Anzeige** ihres Solar Managers. Die Lösung lässt sich **kostengünstig realisieren**, ist technisch klar nachvollziehbar und funktioniert im praktischen Betrieb zuverlässig und stabil.
 
-Die Lösung ist kostengünstig, technisch klar nachvollziehbar und nach der Inbetriebnahme praktisch wartungsfrei.  
-Dank CircuitPython ist der Code verständlich und leicht erweiterbar – ideal sowohl für einfache Anwender als auch für technisch Interessierte.
+Bei der Hardware-Bestellung über DigiKey oder direkt bei Adafruit wird das Gerät in der Regel mit einem **US-Netzstecker geliefert**. Mit einem Adapter oder einem Austauschstecker ist dies jedoch schnell gelöst.
+
+Die **Helligkeit des Displays** bietet nur wenige Zwischenstufen. Zwar erlaubt CircuitPython Werte zwischen `0` und `1`, praktisch reagiert das Display jedoch hauptsächlich auf _"aus"_ oder _"volle Helligkeit"_. Für diesen Einsatzzweck ist das aber ausreichend und beeinträchtigt die Nutzung kaum.
+
+Insgesamt bleibt die Lösung sehr **flexibel und vielseitig erweiterbar**. Es können beliebige Informationen angezeigt werden, und dank CircuitPython ist der Code leicht verständlich und einfach an individuelle Bedürfnisse anpassbar.

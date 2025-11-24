@@ -97,6 +97,8 @@ CIRCUITPY/
 | **settings.example.toml** | Template for settings        | Copy to `settings.toml` and fill your values                  |
 | **lib/**                  | CircuitPython libraries      | Needed by the Matrix Portal (bundled in repo)                 |
 
+ToDo: Descirbe `display.brightness = 0.5`
+
 ## ⚙️ Configuration
 
 Copy the provided `settings.example.toml` to `settings.toml`  
