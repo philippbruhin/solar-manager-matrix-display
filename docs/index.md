@@ -2,67 +2,47 @@
 title: Adafruit LED Display für Solar Manager
 ---
 
-Diese Seite beschreibt den Eigenbau eines kostengünstigen, lokal betriebenen und langlebigen Displays mit 2'048 LEDs für den [Solar Manager](https://www.solarmanager.ch/).
+Diese Seite beschreibt den Eigenbau eines kostengünstigen, lokal betriebenen und langlebigen LED-Displays mit 2'048 Pixeln für den [Solar Manager](https://www.solarmanager.ch/).
 
-![Solar Manager Display](./assets/img/matrix-display-screen-segmentation.jpg)
+![Solar Manager Display](./assets/img/solar-manager-matrix-display-by-day.jpg)
 
-Die Firmware – also die Software, die auf dem Microcontroller für das LED-Matrix-Display (64 × 32 LEDs, 4 mm Pitch) läuft, ist im [GitHub-Repository des Projekts](https://github.com/philippbruhin/solar-manager-matrix-display/) in englischer Sprache dokumentiert. Diese Webseite erläutert ergänzend die Hintergründe, Entscheidungen und den Aufbau.
+Die Firmware – also die Software, die auf dem Microcontroller des Displays läuft – ist im folgenden GitHub-Repository abgelegt und in englischer Sprache dokumentiert:
 
-Das Projekt richtet sich an technisch Interessierte, die das Display nachbauen und nach eigenen Bedürfnissen erweitern möchten. Grundlegendes Interesse am Programmieren ist hilfreich, jedoch sind **Vorkenntnisse nicht zwingend erforderlich**. Die Firmware wird in **Python** geschrieben, welche eine der einsteigerfreundlichsten und am weitesten verbreiteten Programmiersprachen ist.
+🔗 **[GitHub-Repository des Projekts](https://github.com/philippbruhin/solar-manager-matrix-display/)**
 
-# Ausgangslage
+Diese Webseite erläutert ergänzend die Hintergründe, Entscheidungen und den praktischen Aufbau.
 
-Im Herbst 2025 hatten wir das Privileg, auf unserem Hausdach eine Solaranlage installieren zu lassen. Gesteuert wird die Anlage durch den [Solar Manager](https://www.solarmanager.ch/) der Solar Manager AG.  
+Das Projekt richtet sich an technisch Interessierte, die das Display nachbauen oder erweitern möchten. Programmierkenntnisse sind **nicht zwingend erforderlich**. Wichtig ist vor allem Interesse an Python, Microcontrollern und einem grundlegenden Verständnis von TCP/IP-Netzwerken.
 
-Der Solar Manager ist ein Edge-Computer, der den Eigenverbrauch optimiert und dafür sorgt, dass möglichst viel des selbst produzierten Solarstroms direkt im Haushalt genutzt wird. Mich überzeugt das System, weil es sowohl für Anwender geeignet ist, die „einfach möchten, dass alles reibungslos läuft“, als auch für Bastler, die ihren Eigenverbrauch bis ins Detail optimieren möchten. Zudem ist man nicht an einen Hersteller gebunden, der Solar Manager kann Geräte der unterschiedlichsten Marken steuern.
+Die Firmware wird in **Python** geschrieben, einer einsteigerfreundlichen und weit verbreiteten Programmiersprache. Beim Nachbauen lernt man eine Menge über Microcontroller, APIs, Netzwerkkommunikation Python-Programmierung und 3D-Druck (der Displayhalter wurde ebenfalls selbst konstruiert).
 
-In meinem Setup sind unter anderem eine Hoval-Wärmepumpe, eine Zaptec-Ladestation, ein Huawei-Batteriespeicher, eine Boilerheizung sowie eine Entfeuchtungsanlage über Shelly-Geräte integriert. Die Offenheit des Systems erlaubt es, diese sehr unterschiedlichen Komponenten ohne grossen Aufwand einzubinden.
+## Ausgangslage
 
-Die App und das Webportal des Solar Managers bieten bereits umfassende Informationen. Für den Wohnbereich wünschte ich mir jedoch eine **stets sichtbare, bewusst reduzierte und fest installierte Anzeige**, die ohne jegliche Interaktion auskommt und nur die wichtigsten Werte zeigt.
+Im Herbst 2025 konnten wir auf unserem Hausdach eine Solaranlage installieren. Gesteuert wird die Anlage durch den [Solar Manager](https://www.solarmanager.ch/) der Solar Manager AG.
 
-Natürlich existieren dafür bereits Lösungen, die auf der Webseite des Solar Managers dokumentiert sind. Etwa eine [Tablet-basierte Anzeige](https://www.solarmanager.ch/tabletkonfiguration/) oder zwei [LED-Displays](https://www.solarmanager.ch/solarleistung-via-solar-manager-auf-smart-displays-anzeigen), von denen eines beim Universal-Online-Shop Ihres vertrauens bestellt werden kann.
+Der Solar Manager ist ein Edge-Computer, der den **Eigenverbrauch optimiert** und dafür sorgt, dass möglichst viel des selbst produzierten Solarstroms direkt im Haushalt genutzt wird. Das System überzeugt, weil es sowohl für Anwender gedacht ist, die „einfach möchten, dass alles funktioniert“, als auch für Bastler, die ihren Energiefluss detailliert analysieren und optimieren möchten. Zudem ist man nicht an einen Hersteller gebunden. Der Solar Manager kann Geräte unterschiedlichster Marken steuern.
 
-Diese Lösungen sind funktional. Sie lassen sich jedoch nur begrenzt anpassen. Genau hier entstand die Idee für einen **Eigenbau**, der maximale Flexibilität bietet und die Anzeige exakt so darstellt, wie man sie im Alltag benötigt.
+In meinem Setup sind unter anderem eine **Hoval-Wärmepumpe**, eine **Zaptec-Ladestation**, ein **Huawei Wechselrichter sowie ein Batteriespeicher**, eine **Boilerheizung** sowie zwei **Entfeuchtungsgeräte** und eine **Warmwasserbegleitheizung** integriert. Die Offenheit des Systems erlaubt es, diese sehr unterschiedlichen Komponenten ohne grossen Aufwand einzubinden.
 
-# Motivation für einen Eigenbau
+Die App und das Webportal des Solar Managers bieten bereits umfangreiche Informationen. Für den Wohnbereich wünschte ich mir jedoch eine **stets sichtbare, bewusst reduzierte und fest installierte Anzeige**, die ohne Interaktion auskommt und nur die wichtigsten Werte zeigt.
 
-LED-Matrix-Displays haben für mich etwas Angenehm-Nostalgisches. Gleichzeitig schätze ich ihre klare und reduzierte Art, Informationen darzustellen. Sie sind zudem preiswert, stromsparend und technisch langlebig. Daher war für mich von Anfang an klar, dass eine LED-Lösung einer Tablet-Lösung vorzuziehen ist.
+Natürlich gibt es bereits bestehende Lösungen wie etwa [Tablet-basierte Anzeigen](https://www.solarmanager.ch/tabletkonfiguration/) oder fertige [LED-Displays](https://www.solarmanager.ch/solarleistung-via-solar-manager-auf-smart-displays-anzeigen), von denen mindestens eines bei bekannten Schweizer Online-Händlern erhältlich ist. Diese funktionieren zwar gut, lassen sich jedoch nur eingeschränkt an eigene Bedürfnisse anpassen.
 
-Wie oben beschrieben, existieren zwar bereits fertige oder Plug-and-Play-Lösungen. Diese decken jedoch meist nur Standardwerte ab und bieten nur begrenzte Anpassungsmöglichkeiten.
+Genau deshalb entstand die Idee für einen **Eigenbau**, der maximale Flexibilität bietet und die Anzeige exakt so darstellt, wie man sie im Alltag benötigt.
 
-Ein Eigenbau wie dieser bietet hingegen **volle Kontrolle über die angezeigten Daten**. So lassen sich etwa darstellen:
+## Hardwarewahl
 
-* Ladezustand des Hausakkus  
-* Ladezustand eines oder mehrerer Elektroautos  
-* Boiler-Temperatur  
-* Raumtemperaturen  
-* Status einzelner Verbraucher  
-* beliebige weitere Messwerte
+Für das Projekt kommt ein LED-Matrix-Set von Adafruit zum Einsatz. LED-Matrix-Displays haben für mich eine angenehm nostalgische Anmutung. Gleichzeitig schätze ich ihre klare, reduzierte Darstellung. Sie sind preiswert, stromsparend, robust und daher ideal für eine dauerhaft sichtbare Statusanzeige.
 
-Damit lässt sich die Anzeige exakt auf die eigenen Bedürfnisse abstimmen. Ganz nebenbei lernt man dabei auch noch vieles dazu, etwa die Programmierung eines Microcontrollers in Python oder das Konstruieren von 3D-Druckteilen wie dem benötigten Displayhalter.
+Das Set von Hersteller Adafruit besteht aus einem **64×32-Pixel RGB-LED-Panel** (2'048 LEDs) und einem dazugehörigen **RGB Matrix Bonnet** (Aufsteckplatine).
 
-# Zielsetzung
-
-Für das Projekt wurden folgende Ziele definiert:
-
-* Gesamtkosten von maximal CHF 100  
-* Alle wichtigen Werte gleichzeitig sichtbar (ohne Laufschrift oder sichtbaren Umsprung)  
-* Aktualisierung nur einmal pro Minute für eine ruhige, stabile Darstellung  
-* Einfache und langlebige Programmierung  
-* Vollständig lokaler Betrieb ohne Internetverbindung
-
-# Hardwarewahl
-
-Für das Projekt kommt ein LED-Matrix-Set von Adafruit zum Einsatz. Es besteht aus einem **64×32-Pixel RGB-LED-Panel** (2'048 LEDs) und einem dazugehörigen **RGB Matrix Bonnet** (Aufsteckplatine). Das Panel ist ein sogenanntes **1/16-Scan- oder „1/16 Duty“-Display**, häufig als „HUB75-Display“ bezeichnet. Solche Panels werden typischerweise für Anzeigetafeln oder Informationsdisplays verwendet: Sie sind sehr hell, robust, modular aufgebaut und bieten hervorragende Darstellung bei geringem Stromverbrauch.
-
-* Adafruit RGB Matrix Bonnet + 64×32-Pixel LED-Panel  
-  Link zur Hersteller-Webseite: [www.adafruit.com/product/4812](https://www.adafruit.com/product/4812)  
+* Link zur Hersteller-Webseite: [www.adafruit.com/product/4812](https://www.adafruit.com/product/4812)  
 * Gekauft habe ich das Set über DigiKey: [www.digikey.ch/de/products/detail/adafruit-industries-llc/4812/15189153](https://www.digikey.ch/de/products/detail/adafruit-industries-llc/4812/15189153)  
   Preis inkl. Versand: CHF 60.
 
 Das Set enthält **alles, was man für den Betrieb benötigt**: Das LED-Panel, das Matrix Bonnet (bzw. Matrix Portal M4), alle notwendigen Stecker sowie die Elektronik zur direkten Ansteuerung des Displays. Lediglich das mitgelieferte USB-C-Netzteil besitzt einen **US-Stecker** und muss daher durch ein CH-Modell ersetzt oder mit einem Adapter betrieben werden.
 
-## Aufbau des Controllers (Adafruit Matrix Portal M4)
+### Aufbau des Controllers (Adafruit Matrix Portal M4)
 
 Das Controllerboard kombiniert zwei Mikrocontroller:
 
@@ -74,37 +54,35 @@ Das Controllerboard kombiniert zwei Mikrocontroller:
 
 ## Programmierung
 
-Das Set kann sowohl in **C** (Arduino-Umgebung) als auch in **Python** programmiert werden. Ich habe mich für Python, genauer gesagt für **CircuitPython** entschieden, weil es sehr einfach zu verwenden ist und meinen Anwendungsfall vollständig abdeckt:
+Das Set kann sowohl in **C (Arduino)** als auch in **Python (CircuitPython)** programmiert werden. Ich habe mich für CircuitPython entschieden, weil es:
 
-1. Verbindung mit dem WLAN herstellen  
-2. REST-API des Solar Managers lokal abfragen  
-3. Werte direkt auf dem LED-Display darstellen  
+* sehr einfach zu verwenden ist  
+* keine Toolchains benötigt  
+* sofort ausgeführt wird, ohne Kompilierung  
+* ideal für REST-APIs und einfache Logik ist  
 
-CircuitPython ist einsteigerfreundlich, benötigt keine komplexen Toolchains und macht das Testen sehr einfach. Im Gegensatz zu C muss der Code nicht kompiliert werden. Man speichert die Python-Datei einfach auf dem Gerät und der Controller führt sie sofort und automatisch aus.
-
-Der vollständige Quellcode befindet sich im Repository des Projekts (Ordner `CIRCUITPY`): [github.com/philippbruhin/solar-manager-matrix-display/
-](https://github.com/philippbruhin/solar-manager-matrix-display/). Dort findet sich ebenfalls eine englische Anleitung, wie der Microcontroller für die Nutzung von [CircuitPython](https://circuitpython.org/) vorbereitet wird und wie man das Programm aufspielt.
+Der vollständige Quellcode befindet sich im Projekt-Repository <https://github.com/philippbruhin/solar-manager-matrix-display/> im Unterordner `CIRCUITPY`.
 
 Das Programm ist bewusst schlank gehalten und besteht aus nur fünf Python-Dateien.
 
 # Funktionsweise des Displays
 
-Das Display wurde so programmiert, dass folgende vier Werte gleichzeitig angezeigt werden, wobei die 10x10-Pixel-Icons mit Hilfe von [www.pixilart.com/philippb/gallery](www.pixilart.com/philippb/gallery) erstellt wurden.
+Das Display stellt vier Werte gleichzeitig dar. Die 10×10-Pixel-Icons wurden mit [pixilart.com](https://www.pixilart.com/philippb/gallery) erstellt.
 
 * 🏠 **Hausverbrauch**  
 * ☀️ **Solarproduktion**  
 * 🔋 **Batteriestatus**  
 * 🚿 **Boiler-Temperatur**
 
-Die Daten werden einmal pro Minute über die **lokale REST-API** des Solar Managers abgefragt. Da die Abfrage vollständig lokal erfolgt, ist keine Authentifizierung an der API notwendig und das Display ist nicht mit dem Internet verbunden.
+Die Werte werden einmal pro Minute über die **lokale REST-API** des Solar Managers abgerufen. Da die Abfrage vollständig lokal erfolgt, ist keine Authentifizierung notwendig und das Display ist nicht mit dem Internet verbunden.
 
-Eine WebSocket-Lösung, bei der die Werte bei jeder Änderung sofort aktualisiert würden, wäre grundsätzlich möglich. Sie wurde jedoch bewusst nicht eingesetzt, um eine ruhige und wenig wechselhafte Darstellung sicherzustellen.
+Grundsätzlich könnte man die Daten auch per WebSocket übertragen. Dabei würden Aktualisierungen in Echtzeit erfolgen, also sofort, sobald sich ein Wert ändert. Für dieses Projekt verzichte ich bewusst darauf, um eine ruhige und stabile Anzeige ohne ständige Wechsel zu erreichen.
 
 # Gehäuse und Montage
 
-Für das Display wurde ein passender Halter benötigt. Dieser wurde mit Hilfe des Autodesk-CAD-Programms [Fusion 360](https://www.autodesk.com/products/fusion-360/personal) gezeichnet. Die Software kann für den privaten Gebrauch kostenlos genutzt werden. Beim Konstruieren und bei der Fertigung erhielt ich Unterstützung von der [Ibex3D GmbH](https://ibex3d.ch/).
+Für das Display wurde ein passender Halter in **Fusion 360** modelliert. Fusiion ist eine CAD Software, welche kostenlos genutzt werden darf für den privaten Gebrauch. Unterstützung bei Konstruktion und 3D-Druck erhielt ich von [Ibex3D GmbH](https://ibex3d.ch/).
 
-Das Modell kann im folgenden eingebetteten Viewer betrachtet werden. Es kann selbst gedruckt oder direkt bei Ibex3D bestellt werden.
+Das Modell kann im folgenden Viewer betrachtet werden. Es lässt sich entweder selbst ausdrucken ([`f3z` Datei Download](./assets/Matrix_Display_Frame_V5.f3z)) oder direkt bei der Ibex 3D GmbH bestellen.
 
 <div class="iframe-container">
   <iframe 
@@ -116,10 +94,10 @@ Das Modell kann im folgenden eingebetteten Viewer betrachtet werden. Es kann sel
 
 # Fazit
 
-Dieses Projekt bietet Anwendern eine einfache Vorlage für eine **lokale und jederzeit sichtbare Anzeige** ihres Solar Managers. Die Lösung lässt sich **kostengünstig realisieren**, ist technisch klar nachvollziehbar und funktioniert im praktischen Betrieb zuverlässig und stabil.
+Dieses Projekt bietet eine einfache Vorlage für eine **lokale und jederzeit sichtbare Anzeige** des Solar Managers. Die Lösung ist **kostengünstig**, **nachvollziehbar** und arbeitet im Alltag stabil.
 
-Bei der Hardware-Bestellung über DigiKey oder direkt bei Adafruit wird das Gerät in der Regel mit einem **US-Netzstecker geliefert**. Mit einem Adapter oder einem Austauschstecker ist dies jedoch schnell gelöst.
+Eine kleine Einschränkung betrifft die **Helligkeit** des Panels: Obwohl CircuitPython Werte zwischen `0` und `1` erlaubt, reagiert das Display in der Praxis nur mit wenigen Abstufungen. Im Wesentlichen eigentlich nur mit „aus“ oder „volle Helligkeit“. Für den Einsatz tagsüber ist das völlig ausreichend, in der Nacht hätte ich mir jedoch eine etwas feinere Dimmung gewünscht.
 
-Die **Helligkeit des Displays** bietet nur wenige Zwischenstufen. Zwar erlaubt CircuitPython Werte zwischen `0` und `1`, praktisch reagiert das Display jedoch hauptsächlich auf _"aus"_ oder _"volle Helligkeit"_. Für diesen Einsatzzweck ist das aber ausreichend und beeinträchtigt die Nutzung kaum.
+Abgesehen davon ist das Projekt sehr **flexibel und erweiterbar**. Beliebige zusätzliche Messwerte können integriert werden, und dank CircuitPython lässt sich der Code leicht verstehen und an individuelle Bedürfnisse anpassen.
 
-Insgesamt bleibt die Lösung sehr **flexibel und vielseitig erweiterbar**. Es können beliebige Informationen angezeigt werden, und dank CircuitPython ist der Code leicht verständlich und einfach an individuelle Bedürfnisse anpassbar.
+Ich freue mich über **Feedback, Hinweise, Ideen oder Pull Requests**. Viel Spass beim Nachbauen und Weiterentwickeln! 🚀🔧☀️
