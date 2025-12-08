@@ -4,7 +4,7 @@ This repo contains the firmware for a compact LED display based on the [Adafruit
 
 The display shows live energy data from the [Solar Manager](https://www.solarmanager.ch/), an edge device that optimizes solar self-consumption, helping you use as much of your own generated solar power as possible. A concept that is currently very popular in Switzerland.
 
-This README focuses solely on the firmware and how to run it on the microcontroller. Information about the Solar Manager and the overall project is documented separately (in German) on the following GitHub Pages site:
+This README focuses primarily on the firmware and how to run it on the microcontroller. Information about the Solar Manager and the overall project is documented separately (in German) on the following GitHub Pages site:
 
 👉 **[philippbruhin.github.io/solar-manager-matrix-display](http://philippbruhin.github.io/solar-manager-matrix-display)**
 
@@ -71,8 +71,7 @@ Once the display and the microcontroller are connected and wired, follow these s
 
 1. Connect the Matrix Portal M4 to your computer via **USB-C**. It will appear as a drive named `MATRIXBOOT`.
 2. This project was developed and tested using **CircuitPython 10.x**. For best compatibility, download the **CircuitPython 10 .UF2 file** from: https://circuitpython.org/board/matrixportal_m4/
-3. Drag and drop the `.uf2` file onto the `MATRIXBOOT` drive.  
-   The board will reboot automatically and reappear as `CIRCUITPY`.
+3. Drag and drop the `.uf2` file onto the `MATRIXBOOT` drive. The board will reboot automatically and reappear as `CIRCUITPY`.
 
 ℹ️ Updating the ESP32 Wi-Fi firmware is **strongly recommended**. With the firmware that ships on some boards, Wi-Fi may not work reliably or may not connect at all. The update process is simple and can be completed directly in your web browser:
 
@@ -80,8 +79,7 @@ Once the display and the microcontroller are connected and wired, follow these s
 
 ### 2. CircuitPython Libraries
 
-This project uses the **Adafruit CircuitPython Bundle v10.x**,  
-and all required libraries are already included in the `/lib` folder of this repository.
+This project uses the **Adafruit CircuitPython Bundle v10.x**. All required libraries are already included in the `/lib` folder of this repository.
 
 You can check the contents here: [CIRCUITPY/lib](./CIRCUITPY/lib/). This means you **don’t need to install anything manually**.
 
@@ -123,7 +121,7 @@ CIRCUITPY/
 | **config.py**             | Configuration values         | Colors, layout positions, refresh intervals, display settings |
 | **ui.py**                 | User interface rendering     | Loads icons, draws text, builds the display group             |
 | **helpers.py**            | Utility functions            | Value formatting, number helpers, safe parsing                |
-| **assets/**               | Bitmap icons used in UI      | `.bmp` files for solar, house, battery, boiler, etc.          |
+| **assets/**               | Bitmap icons used in UI      | `.bmp` files for solar, house, battery, boiler, etc., created with [pixilart.com](https://www.pixilart.com/philippb/gallery)          |
 | **settings.toml**         | Your private configuration   | Wi-Fi credentials + Solar Manager API URL (**not in repo**)   |
 | **settings.example.toml** | Template for settings        | Copy to `settings.toml` and fill your values                  |
 | **lib/**                  | CircuitPython libraries      | Needed by the Matrix Portal (bundled in repo)                 |
@@ -146,8 +144,7 @@ Perform following steps to run the display.
 CircuitPython does **not** require compilation; instead, the code runs directly. As soon as the files are copied, the board will:
 
 1. Reboot automatically  
-2. Connect to the Wi-Fi network you configured in `settings.toml`,  
-   showing a marquee with the SSID it connects to and the IP address it receives via DHCP  
+2. Connect to the Wi-Fi network you configured in `settings.toml`, showing a marquee with the SSID it connects to and the IP address it receives via DHCP.
 3. Fetch Solar Manager data and start updating the display
 
 ![Boot process of Solar Manager Matrix Display](./docs/assets/img/solar-manager-matrix-display-start-up.gif)

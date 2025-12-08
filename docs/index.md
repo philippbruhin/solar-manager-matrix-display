@@ -29,7 +29,7 @@ Besonders praktisch ist die **Herstellerunabhängigkeit**: Geräte unterschiedli
 - zwei **Entfeuchtungsgeräte**
 - eine **Warmwasserbegleitheizung**
 
-Die App und das Webportal des Solar Managers bieten bereits umfangreiche Informationen. Für den Wohnbereich wünschte ich mir jedoch eine **stets sichtbare, bewusst reduzierte und fest installierte Anzeige**, die ohne Interaktion auskommt und nur die wichtigsten Werte zeigt.
+Die App und das Webportal des Solar Managers bieten bereits umfangreiche Informationen zu den Geräten, dem Eigenverbrauch und der Solarproduktion. Für den Wohnbereich wünschte ich mir jedoch eine **stets sichtbare, bewusst reduzierte und fest installierte Anzeige**, die ohne Interaktion auskommt und nur die wichtigsten Werte zeigt.
 
 Es gibt bereits fertige Lösungen wie [Tablet-Displays](https://www.solarmanager.ch/tabletkonfiguration/) oder [LED-Anzeigen](https://www.solarmanager.ch/solarleistung-via-solar-manager-auf-smart-displays-anzeigen). Sie funktionieren gut, sind aber oft nur begrenzt anpassbar.  
 
@@ -37,7 +37,7 @@ Daher entstand die Idee zu einem **Eigenbau**, der sich exakt auf die eigenen Be
 
 ## Hardwarewahl
 
-Für das Projekt kommt ein LED-Matrix-Set von Adafruit zum Einsatz. LED-Matrix-Displays haben für mich einen angenehm nostalgischen Charakter. Gleichzeitig schätze ich ihre klare, reduzierte Darstellung. Sie sind preiswert, stromsparend, robust und daher ideal für eine dauerhaft sichtbare Statusanzeige.
+Für das Projekt verwende ich ein LED-Matrix-Set von Adafruit. LED-Matrix-Displays bieten eine klare, minimalistische Darstellung und eignen sich dank ihres geringen Stromverbrauchs, ihrer Robustheit und ihres günstigen Preises ideal für eine dauerhaft sichtbare Statusanzeige. Gleichzeitig lassen sich damit beeindruckende Effekte realisieren, fast wie ein kleiner Times Square im Wohnzimmer.
 
 Das Set von Hersteller Adafruit besteht aus einem **64×32-Pixel RGB-LED-Panel** und einem dazugehörigen **RGB Matrix Controllerboard**.
 
@@ -53,7 +53,7 @@ Der **Adafruit Matrix Portal M4** kombiniert zwei Chips:
 - **SAMD51** → führt den Python-Code aus und steuert das Display  
 - **ESP32** → übernimmt die WLAN-Verbindung  
 
-Über USB-C erscheint das Board als Laufwerk. Man kopiert einfach die Python-Dateien darauf. Zusätzliche Software wird nicht benötigt.
+Schliesst man das Adafruit-Board per USB-C an, meldet es sich am PC als Massenspeichergerät. Die Programmierung erfolgt, indem man die Python-Skripte direkt auf dieses Laufwerk kopiert. Weitere Software oder Treiber werden nicht benötigt.
 
 ## Programmierung
 
@@ -87,7 +87,7 @@ Grundsätzlich wären auch Echtzeit-Updates via WebSocket möglich. Ich verzicht
 
 Für das Display wurde ein passender Halter in **[Fusion 360](https://www.autodesk.com/products/fusion-360/personal)** konstruiert. Fusion ist ein CAD-Programm, welches für den privaten Gebrauch kostenlos genutzt werden darf.
 
-Unterstützung bei Konstruktion und der die 3D-Druck-Fertigung erhielt ich von der [Ibex3D GmbH](https://ibex3d.ch/).
+Unterstützung bei Konstruktion und der 3D-Druck-Fertigung erhielt ich von der [Ibex3D GmbH](https://ibex3d.ch/). Vielen Dank dafür.
 
 Das Gehäuse kann im folgenden Viewer betrachtet werden. Es lässt sich entweder selbst drucken oder direkt bei Ibex3D bestellen.
 
@@ -103,10 +103,10 @@ Das Gehäuse kann im folgenden Viewer betrachtet werden. Es lässt sich entweder
 
 # Fazit
 
-Dieses Projekt bietet eine einfache Möglichkeit, eine **lokale, jederzeit sichtbare Energieanzeige** für den Solar Manager aufzubauen. Die Lösung ist **günstig**, **nachvollziehbar**, **stabil im Alltag** und lässt sich beliebig erweitern.
+Dieses Projekt bietet eine einfache Möglichkeit, eine **lokale, jederzeit sichtbare Energieanzeige** für den Solar Manager aufzubauen. Die Lösung ist **günstig**, **einfach nachzubauen**, **stabil im Alltag** und sie lässt sich beliebig erweitern.
 
-Eine Einschränkung betrifft die **Helligkeit** des Panels: Obwohl theoretisch Werte zwischen `0` und `1` möglich sind (`display.brightness = 0.5` zum Beispiel), kennt das Display praktisch nur „aus“ oder „volle Helligkeit“. Für den Tagesbetrieb reicht das völlig. Nachts wäre eine feinere Dimmung wünschenswert gewesen.
+Eine minimale Einschränkung betrifft die **Helligkeit** des Panels: Obwohl theoretisch Werte zwischen `0` und `1` möglich sind (`display.brightness = 0.5` zum Beispiel), kennt das Display praktisch nur „aus“ oder „volle Helligkeit“. Für den Tagesbetrieb reicht das völlig. Nachts wäre eine feinere Dimmung wünschenswert gewesen.
 
 Abgesehen davon ist das Projekt sehr **flexibel**. Weitere Messwerte können problemlos ergänzt werden, und der Code bleibt dank Python gut verständlich und anpassbar.
 
-Ich freue mich über **Feedback, Hinweise, Ideen oder Pull Requests**. Viel Spass beim Nachbauen und Weiterentwickeln! 🚀🔧☀️
+Ich freue mich über **Feedback, Hinweise, Ideen oder Pull Requests** auf [GitHub](https://github.com/philippbruhin/solar-manager-matrix-display). Viel Spass beim Nachbauen und Weiterentwickeln! 🚀🔧☀️
