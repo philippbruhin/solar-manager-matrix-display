@@ -93,13 +93,7 @@ Das Gehäuse kann im folgenden Viewer betrachtet werden. Es lässt sich entweder
 
 👉 **[`f3z`-Datei herunterladen](./assets/Matrix_Display_Frame_V5.f3z)**
 
-<div class="iframe-container">
-  <iframe 
-    src="https://philippbruhin.autodesk360.com/shares/public/SH90d2dQT28d5b60281194915078e9b8702a?mode=embed"
-    allowfullscreen
-    frameborder="0">
-  </iframe>
-</div>
+![Solar Manager Display Frame](./assets/img/solar-manager-matrix-display-frame-fusion-360.png)
 
 # Fazit
 
